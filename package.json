@@ -1,0 +1,40 @@
+{
+  "name": "es6-bartender",
+  "version": "1.0.0",
+  "description": "",
+  "main": "js/index.js",
+  "scripts": {
+    "mkdir": "mkdir -p build",
+    "build": "npm run clean && npm run mkdir && npm run build:html && npm run build:js && npm run build:css",
+    "watch": "npm run watch:html & npm run watch:js & watch:css",
+    "clean": "rm -rf build",
+    "build:html": "npm run clean:html && cp index.html build/",
+    "watch:html": "npm run build:html && chokidar index.html -c 'npm run build:html'",
+    "clean:html": "rm -f build/index.html",
+    "build:css": "npm run clean:css && cp css/main.css build/",
+    "watch:css": "npm run build:css && chokidar ./css/main.css -c 'npm run build:css'",
+    "clean:css": "rm -f build/main.css",
+    "build:js": "npm run build:js:unminified && npm run build:js:minified",
+    "watch:js": "npm run watch:js:unminified & npm run watch:js:minified",
+    "clean:js": "npm run clean:js:unminified && npm run clean:js:minified",
+    "build:js:unminified": "npm run clean:js:unminified && webpack",
+    "watch:js:unminified": "npm run build:js:unminified && webpack --watch",
+    "clean:js:unminified": "rm -f build/$npm_package_name.$npm_package_version.js build/$npm_package_name.$npm_package_version.js.map",
+    "build:js:minified": "npm run clean:js:minified && webpack --minify",
+    "watch:js:minified": "npm run build:js:minified && webpack --watch --minify",
+    "clean:js:minified": "rm -f build/$npm_package_name.$npm_package_version.min.js build/$npm_package_name.$npm_package_version.min.js.map"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "babel-core": "^6.14.0",
+    "babel-loader": "^6.2.5",
+    "babel-preset-es2015": "^6.14.0",
+    "chokidar-cli": "^1.2.0",
+    "uglify-js": "^2.7.3",
+    "webpack": "^1.13.2"
+  },
+  "dependencies": {
+    "jquery": "^3.1.0"
+  }
+}
